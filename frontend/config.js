@@ -1,0 +1,26 @@
+export default {
+  // apiUrl: "http://127.0.0.1:8000",
+  // apiUrl: "http://backend:8000",
+  // apiUrl: `http://${process.env.DOCKER_HOSTNAME_INTERNAL}:8769`,
+  // apiUrl: "http://172.17.0.1:8000",
+  // apiUrl: "http://host.docker.internal:8000",
+  // apiUrl: "http://backend_c:8769",
+  apiUrl: "http://localhost:8769",
+  // apiUrl: "http://backend:8769",
+  // apiUrl: "backend:8000",
+  // apiUrl: "http://41.76.111.40:8769",
+
+  // apiUrl: "http://172.21.0.2:8769",
+
+  primaryColor: '#047481',
+  sellSomethingExt: "/backend/submit-form/",
+  loadProductsExt: "/backend/products",
+  soldItemsExt: "/backend/sold-items/",
+  contactUsExt: "/backend/contact-us/",
+  payfast: " https://www.payfast.co.za/eng/process",
+  merchantId: "22867056",
+  merchantKey: "igq1xekpafskt",
+  passPhrase: "Ch3ris3 has an aw3some son",
+  domain: "https://www.sportvest-store.co.za",
+  aboutText: "Welcome to our website, where we are dedicated to helping everyone stay active and involved in sport without breaking the bank. As a hockey coach and mom of sporty kids, I understand the struggle of constantly needing new sports equipment and shoes as kids quickly outgrow them. That's why I have combined my passion for sport with my desire to make them more accessible to all. Our mission is simple - to provide affordable and quality sports gear so that everyone can stay active and enjoy the benefits of physical activity. With our motto \"we keep you moving,\" we strive to keep you on the move and in the game, no matter your budget. Thank you for visiting our site, and we hope to help you find the perfect gear to keep you active and thriving in your favorite sports.",
+};
