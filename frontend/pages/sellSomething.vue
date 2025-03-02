@@ -90,11 +90,11 @@
 </div>
 </template>
   
-  <script>
-import axios from "axios";
+<script>
 import { useCartStore } from "~/store/cart";
 import theHeader from "~/components/theHeader.vue";
 import { toast } from "vue3-toastify";
+import Customer from "~/services/server/customer"; // Import Customer service
 import "vue3-toastify/dist/index.css";
 import config from "~/config";
 
@@ -118,66 +118,48 @@ export default {
       const fileInput = event.target;
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
-        // const blob = new Blob([file], { type: file.type });
-        this.images[index - 1] = file;
+        this.images[index - 1] = file; // Update the image at the corresponding index
       }
       console.log(this.images);
     },
-    async submitForm() {
-      // Display a toast message at the beginning
 
+    // Refactored submitForm method
+    async submitForm() {
       try {
         if (this.validateForm()) {
           const toastId = toast("Uploading product information");
-       
-          var extension = config.sellSomethingExt;
-          var api = config.apiUrl;
-          var endpoint1 = api + extension;
 
+          // Prepare form data
           const formData = new FormData();
           formData.append("description", this.description);
           formData.append("price", this.price);
           formData.append("cell", this.cell);
           formData.append("email", this.email);
+          // to do - add a name field
 
-
+          // Append images to the formData
           this.images.forEach((image, index) => {
             formData.append("images", image, `image${index + 1}`);
           });
 
-          const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Request timed out")), 30000)
-          );
+          // Call the submitProduct method from the Customer class
+          const response = await Customer.submitProduct(formData);
 
-          const response = await Promise.race([
-            axios.post(endpoint1, formData),
-            timeoutPromise,
-          ]);
-
-          console.log(
-            "########################## response: " + response.data.message
-          );
-
+          // Clear the form fields
           this.description = "";
           this.price = null;
           this.cell = "";
           this.images = "";
           this.email = "";
 
-          if (response.data.message === "success") {
-            alert(
-              "Your product submission has been uploaded. We will contact you shortly."
-            );
+          // Handle the response
+          if (response && response.message === "success") {
+            alert("Your product submission has been uploaded. We will contact you shortly.");
           } else {
-            alert(
-              "There was an issue uploading your product. Please try again."
-            );
+            alert("There was an issue uploading your product. Please try again.");
           }
         } else {
-          alert(
-            "Please fill in all the fields and upload at least 1 picture of the product"
-          );
-          return;
+          alert("Please fill in all the fields and upload at least 1 picture of the product");
         }
       } catch (error) {
         console.error(error);
@@ -187,24 +169,20 @@ export default {
         toast.clear(toastId);
       }
     },
+
+    // Form validation
     validateForm() {
-      if (this.description == "") {
-        return false;
-      } else if (this.price == null) {
-        return false;
-      } else if (this.cell == "") {
-        return false;
-      } else if (this.images.length == 0) {
-        return false;
-      } else if (this.email == "") {
-        return false;
-      }
+      if (this.description == "") return false;
+      if (this.price == null) return false;
+      if (this.cell == "") return false;
+      if (this.images.length == 0) return false;
+      if (this.email == "") return false;
       return true;
     },
   },
 };
 </script>
-  
+
   <style scoped>
 .form-wrapper {
   display: flex;

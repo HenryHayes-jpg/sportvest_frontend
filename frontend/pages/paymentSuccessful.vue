@@ -20,11 +20,10 @@
     <br />
   </div>
 </template>
-  <script>
+<script>
 import { useCartStore } from "~/store/cart";
 import theHeader from "~/components/theHeader.vue";
-import config from "~/config";
-import axios from "axios";
+import Customer from "~/services/server/customer"; // Import the Customer service
 
 export default {
   components: {
@@ -40,23 +39,22 @@ export default {
     // setTimeout(() => {this.$router.push("/");}, 20000)
   },
   methods: {
+    // Refactored submitPurchase method for payment successful page
     async submitPurchase() {
       try {
         let buyerInfo = this.cartStore.getbuyerInfo;
 
-        if (Object.keys(buyerInfo) == 0){return}
+        if (Object.keys(buyerInfo).length === 0) {
+          return;
+        }
 
-        // add shipping fee
+        // Add shipping fee
         buyerInfo["shipping_fee"] = this.cartStore.getShippingFee;
 
-        // this.cartStore.clearCart();
-        let endpoint = config.apiUrl + config.soldItemsExt;
-        let response = await axios.post(endpoint, buyerInfo, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        // Call the submitPurchase method from Customer service
+        const response = await Customer.submitPurchase(buyerInfo);
 
+        // Clear the cart after a successful purchase
         this.cartStore.clearAll();
 
         console.log(response);

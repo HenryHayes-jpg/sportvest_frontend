@@ -5,7 +5,7 @@ export default {
   // apiUrl: "http://172.17.0.1:8000",
   // apiUrl: "http://host.docker.internal:8000",
   // apiUrl: "http://backend_c:8769",
-  apiUrl: "http://localhost:8769",
+  apiUrl: "https://stage.django.code-smith.co.za/",
   // apiUrl: "http://backend:8769",
   // apiUrl: "backend:8000",
   // apiUrl: "http://41.76.111.40:8769",

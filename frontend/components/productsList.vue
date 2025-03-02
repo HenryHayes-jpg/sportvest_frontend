@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Product from "@/services/server/product";
 import popUpCard from "@/components/popUpCard.vue";
 import { useCartStore } from "~/store/cart";
 import theHeader from "./theHeader.vue";
@@ -106,31 +106,20 @@ export default {
     },
   },
   methods: {
-    async loadProducts(category) {
-      const params = { params: { category: category } };
-
-      // await axios
-      //   .get(config.apiUrl + config.loadProductsExt, params)
-      //   .then((response) => {
-      //     this.products = response.data;
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     this.loadingProducts = false;
-      //   });
-
-
-
-        try{
-          var response = await axios.get(config.apiUrl + config.loadProductsExt, params)
-          this.products = response.data;
-        }
-        catch(error){
-          console.log(error);
-          this.loadingProducts = false;
-        }
-    },
-
+  async loadProducts(category) {
+  try {
+    const response = await Product.getProductsByCategory(category);
+    if (response) {
+      this.products = response;
+      console.log("Loaded Products:", this.products[0]);
+    } else {
+      console.log("No products found.");
+    }
+  } catch (error) {
+    console.log(error);
+    this.loadingProducts = false;
+  }
+},
     openPopup(product) {
       this.selectedProduct = product;
     },
