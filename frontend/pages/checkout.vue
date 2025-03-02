@@ -148,7 +148,6 @@
               <input type="hidden" name="item_name" value="Sportvest Order" />
               <input type="hidden" name="email_address" :value="email" />
               <!-- <input type="hidden" name="signature" :value="signature" /> -->
-
               <button type="submit">Pay Now</button>
             </form>
           </div>

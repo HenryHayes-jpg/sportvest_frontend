@@ -34,112 +34,85 @@
   </template>
     
     <script>
-  import axios from "axios";
-  import { useCartStore } from "~/store/cart";
-  import theHeader from "~/components/theHeader.vue";
-  import { toast } from "vue3-toastify";
-  import "vue3-toastify/dist/index.css";
-  import config from "~/config";
-  
-  export default {
-    components: {
-      theHeader,
-    },
-    data() {
-      return {
-        cartStore: useCartStore(),
-        message: "",
-        cell: "",
-        email: "",
-        toastId: null,
-        name:"",
-        surname: "",
-      };
-    },
-  
-    methods: {
-
-      async submitForm() {
-        // Display a toast message at the beginning
-  
-        try {
-          if (this.validateForm()) {
-            this.toastId = toast("Uploading product information");
-         
-            var extension = config.contactUsExt;
-            var api = config.apiUrl;
-            var endpoint = api + extension;
-  
-            const formData = new FormData();
-            formData.append("message", this.message);
-            formData.append("cell", this.cell);
-            formData.append("email", this.email);
-            formData.append("name", this.name + " " + this.surname);
-
-            console.log("form: " )
-            console.log(formData);
-
-  
-  
-            const timeoutPromise = new Promise((_, reject) =>
-              setTimeout(() => reject(new Error("Request timed out")), 30000)
-            );
-  
-            const response = await Promise.race([
-              axios.post(endpoint, formData),
-              timeoutPromise,
-            ]);
-  
-            console.log(
-              "########################## response: " + response.data.message
-            );
-  
-            this.message = "";
-            this.cell = "";
-            this.email = "";
-            this.name = "";
-            this.surname = "";
-  
-            if (response.data.message === "success") {
-              alert(
-                "Messaged submitted"
-              );
+    import { toast } from "vue3-toastify";
+    import Customer from "~/services/server/customer"; // Import the Customer service
+    import "vue3-toastify/dist/index.css";
+    import config from "~/config";
+    
+    export default {
+      data() {
+        return {
+          message: "",
+          cell: "",
+          email: "",
+          toastId: null,
+          name: "",
+          surname: "",
+        };
+      },
+    
+      methods: {
+        // Refactored submitForm method for the Contact Us page
+        async submitForm() {
+          try {
+            if (this.validateForm()) {
+              this.toastId = toast("Uploading your message...");
+    
+              // Prepare form data
+              const formData = new FormData();
+              formData.append("message", this.message);
+              formData.append("cell", this.cell);
+              formData.append("email", this.email);
+              formData.append("name", this.name + " " + this.surname);
+    
+              console.log("Form Data:", formData);
+    
+              // Call the submitContactMessage method from Customer class
+              const response = await Customer.submitContactMessage(formData);
+    
+              // Clear form fields upon success
+              this.message = "";
+              this.cell = "";
+              this.email = "";
+              this.name = "";
+              this.surname = "";
+    
+              // Handle the response
+              if (response && response.message === "success") {
+                alert("Message submitted successfully!");
+              } else {
+                alert("There was an issue submitting your message. Please try again.");
+              }
             } else {
-              alert(
-                "There was an issue uploading your product. Please try again."
-              );
+              return;
             }
-          } else {
-            return;
+          } catch (error) {
+            console.error(error);
+            alert("There was an issue submitting your message. Please try again.");
+          } finally {
+            // Close the toast once the method execution is completed
+            toast.clearAll(this.toastId);
+            this.toastId = null;
           }
-        } catch (error) {
-          console.error(error);
-          alert("There was an issue submitting your message");
-        } finally {
-          // Close the toast once the method execution is completed
-          toast.clearAll(this.toastId);
-          this.toastId = null;
-        }
+        },
+    
+        // Validate the form
+        validateForm() {
+          if (this.message === "") {
+            alert("Please fill in the message field");
+            return false;
+          } else if (this.cell === "" && this.email === "") {
+            alert("Please fill in either cell number or email");
+            return false;
+          } else if (this.name === "" || this.surname === "") {
+            alert("Please fill in your name and surname");
+            return false;
+          }
+          return true;
+        },
       },
-      validateForm() {
-        if (this.message == "") {
-          alert("Please fill in the message field");
-
-          return false;
-        } else if (this.cell == "" && this.email == "") {
-          alert("Please fill in either cell number or email");
-
-          return false;
-        } else if (this.name == "" || this.surname == "") {
-          alert("Please fill name and surname");
-
-          return false;
-        }
-        return true;
-      },
-    },
-  };
-  </script>
+    };
+    </script>
     
     <style scoped>
   .form-wrapper {
