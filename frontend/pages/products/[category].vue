@@ -17,7 +17,7 @@
 
       return{
       category: route.params.category,
-
+        // if all use fetch all else fetch according to category
       }
     },
     created() {

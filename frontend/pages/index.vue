@@ -7,11 +7,16 @@
     </div>
 
     <div class="categories">
-      <v-btn v-for="category in categories" :key="category.id" size="medium" elevation="8"
+      <v-btn
+        v-for="category in categories"
+        :key="category.id"
+        size="medium"
+        elevation="8"
         :to="category.link"
         class="inline-block py-3 px-8 bg-teal-900 text-white rounded-md button"
-        >{{ category.name }}</v-btn
       >
+        {{ category.name }}
+      </v-btn>
     </div>
   </div>
 </template>
@@ -20,6 +25,7 @@
 import bgImg from "../assets/static/home_bg.jpeg";
 import { useCartStore } from "~/store/cart";
 import theHeader from "~/components/theHeader.vue";
+import config from "~/config.js"; // Import your API config
 
 export default {
   components: {
@@ -29,24 +35,29 @@ export default {
     return {
       bg_img: bgImg,
       cartStore: useCartStore(),
-      categories: [
-        { id: 1, name: "All", link: "/products/all" },
-        { id: 2, name: "Cricket", link: "/products/Cricket" },
-        { id: 3, name: "Hockey", link: "/products/Hockey" },
-        { id: 4, name: "Golf", link: "/products/Golf" },
-        { id: 5, name: "Shoes", link: "/products/shoes" },
-        { id: 6, name: "Athletics", link: "/products/Athletics" },
-        { id: 7, name: "Court", link: "/products/Tennis" }, // Assuming "Court" refers to Tennis
-        { id: 8, name: "Horse Riding", link: "/products/Horse_Riding" }, // Assuming "Equin" refers to Horse Riding
-        { id: 9, name: "Rugby/Soccer", link: "/products/Rugby" },
-        { id: 10, name: "Cycling", link: "/products/Cycling" },
-        { id: 11, name: "Trainers", link: "/products/Trainers" },
-        { id: 12, name: "Other", link: "/products/Other" },
-
-
-
-      ],
+      categories: [{ id: 1, name: "All", link: "/products/all" }], // Initial default category
     };
+  },
+  async created() {
+    try {
+      const response = await fetch(`${config.apiUrl}getCategoryNames`);
+      const result = await response.json();
+
+      if (result.meta.success) {
+        this.categories = [
+          { id: 1, name: "All", link: "/products/all" },
+          ...result.data.map((category, index) => ({
+            id: index + 2, 
+            name: category,
+            link: `/products/${category}`, // Replace spaces with underscores
+          })),
+        ];
+      } else {
+        console.error("Failed to fetch categories:", result.meta.message);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
   },
 };
 </script>
@@ -61,15 +72,15 @@ export default {
 .categories {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the links horizontally */
+  justify-content: center;
   padding-top: 3rem;
   padding-bottom: 4rem;
   max-width: 40rem;
-  margin: 0 auto; /* Center the container itself */
+  margin: 0 auto;
 }
 
 .button {
-  color: rgb(230, 226, 226); /* Adjust text color for contrast */
+  color: rgb(230, 226, 226);
   background-color: rgb(19, 82, 82);
   margin: 0.3rem;
   margin-bottom: 0.8rem;
@@ -78,10 +89,10 @@ export default {
 
 @media (max-width: 768px) {
   .text-md {
-    font-size: 15px; /* Adjust the font size as needed */
+    font-size: 15px;
   }
   .text-7xl {
-    font-size: 60px; /* Adjust the font size as needed */
+    font-size: 60px;
   }
 }
 </style>
