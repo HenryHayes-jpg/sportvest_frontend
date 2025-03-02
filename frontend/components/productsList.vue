@@ -43,7 +43,7 @@
         class="flex-shrink-0 card"
         @click="openPopup(product)"
       >
-        <v-img :src="product.image" class="prodImage" contain></v-img>
+      <v-img :src="product.image" class="prodImage" contain></v-img>
       </v-card>
     </div>
 
@@ -106,11 +106,26 @@ export default {
     },
   },
   methods: {
-  async loadProducts(category) {
+    async loadProducts(category) {
   try {
-    const response = await Product.getProductsByCategory(category);
-    if (response) {
-      this.products = response;
+    let response = '';
+    if (category === 'all')
+    {
+      response = await Product.getAllProducts();
+    }
+    else
+    {
+      response = await Product.getProductsByCategory(category);
+    }
+
+    if (response && response.data) {
+      this.products = response.data.map((product) => {
+        return {
+          ...product,
+          image: product.photos ? JSON.parse(product.photos)[0] : "",
+          description: product.info ? JSON.parse(product.info).description : "No description available",
+        };
+      });
       console.log("Loaded Products:", this.products[0]);
     } else {
       console.log("No products found.");

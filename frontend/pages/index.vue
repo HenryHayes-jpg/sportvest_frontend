@@ -40,7 +40,7 @@ export default {
   },
   async created() {
     try {
-      const response = await fetch(`${config.apiUrl}getCategoryNames`);
+      const response = await fetch(`${config.apiUrl}/getCategoryNames`);
       const result = await response.json();
 
       if (result.meta.success) {

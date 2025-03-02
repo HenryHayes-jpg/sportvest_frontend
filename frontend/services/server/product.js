@@ -7,6 +7,11 @@ class Product extends ServerBase {
       const params = { category: category };
       return await this.getRequest(endpoint, params);
     }
+   static async getAllProducts()
+   {
+      const endpoint = config.loadAllProductsExt;
+      return await this.getRequest(endpoint);
+   }
   }
   
 export default Product;
