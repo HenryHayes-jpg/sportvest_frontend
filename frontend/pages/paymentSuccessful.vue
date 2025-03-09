@@ -47,17 +47,14 @@ export default {
           return;
         }
 
-        // Add shipping fee
         buyerInfo["shipping_fee"] = this.cartStore.getShippingFee;
 
         buyerInfo.products = Object.values(buyerInfo.products);
 
         console.log("Buyer info:", buyerInfo);
 
-        // Call the submitPurchase method from Customer service
         const response = await Customer.submitPurchase(buyerInfo);
 
-        // Clear the cart after a successful purchase
         this.cartStore.clearAll();
 
         console.log(response);
