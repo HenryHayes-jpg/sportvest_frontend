@@ -35,7 +35,7 @@
     
     <script>
     import { toast } from "vue3-toastify";
-    import Customer from "~/services/server/customer"; // Import the Customer service
+    import Customer from "~/services/server/customer";
     import "vue3-toastify/dist/index.css";
     import config from "~/config";
     
@@ -52,7 +52,6 @@
       },
     
       methods: {
-        // Refactored submitForm method for the Contact Us page
         async submitForm() {
           try {
             if (this.validateForm()) {
@@ -63,9 +62,8 @@
               formData.append("message", this.message);
               formData.append("cell", this.cell);
               formData.append("email", this.email);
-              formData.append("name", this.name + " " + this.surname);
-    
-              console.log("Form Data:", formData);
+              formData.append("name", this.name);
+              formData.append("surname", this.surname);
     
               // Call the submitContactMessage method from Customer class
               const response = await Customer.submitContactMessage(formData);
@@ -78,7 +76,7 @@
               this.surname = "";
     
               // Handle the response
-              if (response && response.message === "success") {
+              if (response && response.meta.success) {
                 alert("Message submitted successfully!");
               } else {
                 alert("There was an issue submitting your message. Please try again.");

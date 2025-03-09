@@ -4,7 +4,7 @@ import ServerBase from "./serverBase";
 class Customer extends ServerBase {
     static async submitProduct(formData) {
       const endpoint = config.sellSomethingExt;
-      const params = formData; // to-do: add a name field to the form
+      const params = formData;
       return await this.postRequest(endpoint, params);
     }
 

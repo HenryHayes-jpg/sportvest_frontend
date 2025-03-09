@@ -8,6 +8,14 @@
 
     <form @submit.prevent="submitForm" class="form-content">
       <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" v-model="name" />
+      </div>
+      <div class="form-group">
+        <label for="surname">Surname:</label>
+        <input id="surname" v-model="surname" />
+      </div>
+      <div class="form-group">
         <label for="description">Description:</label>
         <textarea id="description" v-model="description"></textarea>
       </div>
@@ -30,7 +38,7 @@
           <input
             type="file"
             :id="'image' + index"
-            @change="onImageChange(index)"
+            @change="onImageChange($event, index)"
             accept="image/*"
           />
         </template>
@@ -105,6 +113,8 @@ export default {
   data() {
     return {
       cartStore: useCartStore(),
+      name: "",
+      surname: "",
       description: "",
       price: null,
       images: [],
@@ -114,46 +124,59 @@ export default {
   },
 
   methods: {
-    onImageChange(index) {
-      const fileInput = event.target;
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        this.images[index - 1] = file; // Update the image at the corresponding index
-      }
-      console.log(this.images);
-    },
+    onImageChange(event, index) {
+    const fileInput = event.target;
 
-    // Refactored submitForm method
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        this.images[index - 1] = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+},
+
     async submitForm() {
       try {
+        console.log("Validation Check:", {
+        name: this.name,
+        surname: this.surname,
+        description: this.description,
+        price: this.price,
+        cell: this.cell,
+        email: this.email,
+        images: this.images,
+      });
         if (this.validateForm()) {
           const toastId = toast("Uploading product information");
 
           // Prepare form data
-          const formData = new FormData();
-          formData.append("description", this.description);
-          formData.append("price", this.price);
-          formData.append("cell", this.cell);
-          formData.append("email", this.email);
-          // to do - add a name field
-
-          // Append images to the formData
-          this.images.forEach((image, index) => {
-            formData.append("images", image, `image${index + 1}`);
-          });
-
-          // Call the submitProduct method from the Customer class
+          const formData = { 
+          name: this.name,
+          surname: this.surname,
+          description: this.description,
+          price: this.price,
+          cell: this.cell,
+          email: this.email,
+          images: this.images,
+        };
+        
           const response = await Customer.submitProduct(formData);
 
           // Clear the form fields
+          this.name = "";
+          this.surname = "";
           this.description = "";
           this.price = null;
           this.cell = "";
-          this.images = "";
+          this.images = [];
           this.email = "";
 
           // Handle the response
-          if (response && response.message === "success") {
+          if (response && response.meta.success) {
             alert("Your product submission has been uploaded. We will contact you shortly.");
           } else {
             alert("There was an issue uploading your product. Please try again.");
@@ -165,13 +188,14 @@ export default {
         console.error(error);
         alert("There was an issue uploading your product. Please try again.");
       } finally {
-        // Close the toast once the method execution is completed
         toast.clear(toastId);
       }
     },
 
     // Form validation
     validateForm() {
+      if (this.name == "") return false;
+      if (this.surname == "") return false;
       if (this.description == "") return false;
       if (this.price == null) return false;
       if (this.cell == "") return false;

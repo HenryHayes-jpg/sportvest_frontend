@@ -13,7 +13,7 @@ export default {
   // apiUrl: "http://172.21.0.2:8769",
 
   primaryColor: '#047481',
-  sellSomethingExt: "/backend/submit-form/",
+  sellSomethingExt: "/sellSomething",
   loadProductsExt: "/getProductsByCategory",
   loadAllProductsExt: "/getAllProducts",
   soldItemsExt: "/backend/sold-items/",
