@@ -16,7 +16,7 @@ export default {
   sellSomethingExt: "/sellSomething",
   loadProductsExt: "/getProductsByCategory",
   loadAllProductsExt: "/getAllProducts",
-  soldItemsExt: "/backend/sold-items/",
+  soldItemsExt: "/productsSold",
   contactUsExt: "/contactUs",
   payfast: " https://www.payfast.co.za/eng/process",
   merchantId: "22867056",

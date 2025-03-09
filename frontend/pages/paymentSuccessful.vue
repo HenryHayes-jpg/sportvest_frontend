@@ -39,7 +39,6 @@ export default {
     // setTimeout(() => {this.$router.push("/");}, 20000)
   },
   methods: {
-    // Refactored submitPurchase method for payment successful page
     async submitPurchase() {
       try {
         let buyerInfo = this.cartStore.getbuyerInfo;
@@ -50,6 +49,10 @@ export default {
 
         // Add shipping fee
         buyerInfo["shipping_fee"] = this.cartStore.getShippingFee;
+
+        buyerInfo.products = Object.values(buyerInfo.products);
+
+        console.log("Buyer info:", buyerInfo);
 
         // Call the submitPurchase method from Customer service
         const response = await Customer.submitPurchase(buyerInfo);
