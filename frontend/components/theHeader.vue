@@ -4,7 +4,7 @@
     <div class="logo-container">
       <div @click="goHome">
         <img
-          src="../assets/static/logo-no-bg.png"
+          src="../assets/static/logo-black.png"
           alt="Home"
           class="logo-image"
         />

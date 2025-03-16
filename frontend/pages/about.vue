@@ -3,12 +3,12 @@
   <div class="centered-content categories">
     <theHeader :inCart="false" :inSellSomething="false" />
 
-    <h1 class="text-white text-4xl text-center my-8">About Us</h1>
+    <h1 class="text-black text-4xl text-center my-8">About Us</h1>
     <v-card class="bg-main" style="margin: 5%; padding: 2%; color: aliceblue;" elevation="8">
 
     <div class="card" style="width: 100%; margin: auto;">  <img class="card-img-top" src="../assets/static/aboutImg.jpeg" alt="Card image cap">
         <br>
-      <div class="card-body text-center" >  <p class="card-text">
+      <div class="card-body text-center" >  <p class="card-text" style="color: black;">
           {{ aboutText }}
         </p>
       </div>
@@ -39,7 +39,7 @@
   
 <style scoped>
 .bg-main {
-  background-color: #286d6e;
+  background-color: #BEC7CD;
   font: serif;
   font-size: 1.5em; /* Default font size */
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <theHeader :inCart="false" :inSellSomething="true"> </theHeader>
-    <h1 class="text-white text-4xl text-center my-8">Contact Us</h1>
+    <h1 class="text-black text-4xl text-center my-8">Contact Us</h1>
 
   
     <div class="form-wrapper">
@@ -149,7 +149,7 @@
   
   button {
     padding: 0.5rem 1rem;
-    background-color: #047481;
+    background-color: #2c7a7b;
     color: white;
     border: none;
     border-radius: 4px;

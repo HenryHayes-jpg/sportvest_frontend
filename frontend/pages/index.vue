@@ -2,8 +2,8 @@
   <div class="text-center">
     <theHeader></theHeader>
     <div class="flex flex-col items-center justify-center px-6 py-3">
-      <h1 class="text-md text-white">Once Loved Sports Equipment And Shoes</h1>
-      <h1 class="text-7xl text-white">SPORTVEST</h1>
+      <h1 class="text-md text-black">Once Loved Sports Equipment And Shoes</h1>
+      <h1 class="text-7xl text-black">SPORTVEST</h1>
     </div>
 
     <div class="categories">
@@ -81,7 +81,7 @@ export default {
 
 .button {
   color: rgb(230, 226, 226);
-  background-color: rgb(19, 82, 82);
+  background-color: #2c7a7b;
   margin: 0.3rem;
   margin-bottom: 0.8rem;
   width: 10rem;

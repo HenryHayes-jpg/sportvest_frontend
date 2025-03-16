@@ -2,9 +2,9 @@
   <div>
     <theHeader :inCart="true" :inSellSomething="false"> </theHeader>
 
-    <h1 class="text-white text-4xl text-center my-8">Your Cart</h1>
+    <h1 class="text-black text-4xl text-center my-8">Your Cart</h1>
     <h1
-      class="text-white text-2xl text-center my-2"
+      class="text-black text-2xl text-center my-2"
       v-if="Object.keys(cartStore.cart).length"
     >
       Cart Total: R{{ cartTotal }}
@@ -12,7 +12,7 @@
 
     <div v-if="Object.keys(cartStore.cart).length">
     <!-- <h6 class="text-white  text-center">Shipping fee(flat rate): R120</h6> -->
-    <p class="text-white text-center">Cart will clear after 10 minutes of inactivity</p>
+    <p class="text-black text-center">Cart will clear after 10 minutes of inactivity</p>
 
       <div
         v-for="product in Object.values(cartStore.cart)"
@@ -32,7 +32,7 @@
     <!-- product list  -->
 
     <div v-else>
-      <p class="text-white text-center">Your cart is empty</p>
+      <p class="text-black text-center">Your cart is empty</p>
       <br />
       <br />
       <br />

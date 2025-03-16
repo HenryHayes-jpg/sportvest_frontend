@@ -1,7 +1,7 @@
 <template>
   <div>
     <theHeader :inCart="false" :inSellSomething="false"> </theHeader>
-    <h1 class="text-white text-4xl text-center my-8">Checkout</h1>
+    <h1 class="text-black text-4xl text-center my-8">Checkout</h1>
     <div v-if="formStep == 0">
       <div class="form-wrapper">
         <form @submit.prevent="next" class="form-content">
@@ -375,7 +375,7 @@ export default {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #047481;
+  color: black;
   font-weight: bold;
 }
 
@@ -388,7 +388,7 @@ input {
 }
 button {
   padding: 0.5rem 1rem;
-  background-color: #047481;
+  background-color: #2c7a7b;
   color: white;
   border: none;
   border-radius: 4px;

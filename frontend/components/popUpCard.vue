@@ -18,11 +18,11 @@
         </v-carousel>
 
         <div class="popup-message">
-          <div class="text-h6 text-sm-left" style="color: wheat">
+          <div class="text-h6 text-sm-left" style="color: black">
             {{ product.description }}
           </div>
           <br>
-          <div class="text-h6 text-sm-left" style="color: wheat">
+          <div class="text-h6 text-sm-left" style="color: black">
             Price: R{{ product.price }}
           </div>
           <!-- <ul class="popup-list">
@@ -127,7 +127,7 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: rgb(10, 66, 77);
+  background-color: #BEC7CD;
   padding: 1rem;
 }
 
@@ -179,7 +179,7 @@ export default {
   margin-top: 1rem;
   cursor: pointer;
   text-align: center;
-  background-color: #047481;
+  background-color: black;
   color: white;
   font-weight: bold;
   width: 100%;

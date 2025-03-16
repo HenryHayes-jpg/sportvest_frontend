@@ -2,7 +2,7 @@
   <div>
   <theHeader :inCart="false" :inSellSomething="true"> </theHeader>
     
-    <h1 class="text-white text-4xl text-center my-8">Sell Something</h1>
+    <h1 class="text-black text-4xl text-center my-8">SELL SOMETHING</h1>
     
   <div class="form-wrapper">
 
@@ -229,7 +229,7 @@ export default {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #047481;
+  color: black;
   font-weight: bold;
 }
 
@@ -244,7 +244,7 @@ input {
 
 button {
   padding: 0.5rem 1rem;
-  background-color: #047481;
+  background-color: #2c7a7b;
   color: white;
   border: none;
   border-radius: 4px;
@@ -285,7 +285,7 @@ button {
   list-style-type: decimal;
   padding-left: 2rem;
   margin-bottom: 1rem;
-  color: white;
+  color: black;
 }
 
 .selling-process p {

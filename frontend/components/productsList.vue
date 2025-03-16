@@ -1,7 +1,7 @@
 <template>
   <div>
     <theHeader :inCart="false" :inSellSomething="false"> </theHeader>
-    <h2 class="text-white text-4xl text-center my-8">
+    <h2 class="text-black text-4xl text-center my-8">
       {{ formattedCategory }}
     </h2>
     <div class="text-center"></div>
